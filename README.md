@@ -48,7 +48,7 @@ This application allows users to view and manage a company's employee database.
 
 ## License
 
-See LICENSE in repo.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 
 ## Getting Started
 
