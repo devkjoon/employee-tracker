@@ -75,21 +75,21 @@ function menu() {
 menu();
 
 const viewDepartment = () => {
-    db.query('SELECT * FROM department', (err, res) => {
+    db.query(`SELECT * FROM department`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
 };
 
 const viewRole = () => {
-    db.query('SELECT * FROM role', (err, res) => {
+    db.query(`SELECT * FROM role`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
 }
 
 const viewEmployee = () => {
-    db.query('SELECT * FROM employee', (err, res) => {
+    db.query(`SELECT * FROM employee`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
@@ -98,8 +98,24 @@ const viewEmployee = () => {
 const addDepartment = () => {
     inquirer
         .prompt([
-            
+            {
+                type: 'input',
+                message: 'What department would you like to add?',
+                name: 'addDepartment'
+            }
         ])
+        .then((answers) => {
+            db.query(`INSERT INTO department(name) VALUES(?)`, answers.addDepartment, (err, res) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    db.query(`SELECT * FROM department`, (err, res) => {
+                        err ? console.error(err) : console.table(res);
+                        menu();
+                    })
+                }
+            })
+        })
 }
 
 const addRole
