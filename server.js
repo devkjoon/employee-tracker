@@ -75,21 +75,21 @@ function menu() {
 menu();
 
 const viewDepartment = () => {
-    db.query(`SELECT * FROM department`, (err, res) => {
+    db.query(`SELECT * FROM departments`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
 };
 
 const viewRole = () => {
-    db.query(`SELECT * FROM role`, (err, res) => {
+    db.query(`SELECT * FROM roles`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
 }
 
 const viewEmployee = () => {
-    db.query(`SELECT * FROM employee`, (err, res) => {
+    db.query(`SELECT * FROM employees`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
@@ -105,11 +105,11 @@ const addDepartment = () => {
             }
         ])
         .then((answers) => {
-            db.query(`INSERT INTO department(name) VALUES(?)`, answers.addDepartment, (err, res) => {
+            db.query(`INSERT INTO departments(name) VALUES(?)`, answers.addDepartment, (err, res) => {
                 if (err) {
                     console.log(err)
                 } else {
-                    db.query(`SELECT * FROM department`, (err, res) => {
+                    db.query(`SELECT * FROM departments`, (err, res) => {
                         err ? console.error(err) : console.table(res);
                         menu();
                     })
@@ -144,7 +144,7 @@ const addRole = () => {
                 }
             ])
             .then(answers => {
-                db.promise().query(`SELECT id FROM department WHERE name = ?`, answers.roleDepartment)
+                db.promise().query(`SELECT id FROM departments WHERE name = ?`, answers.roleDepartment)
                     .then(answer => {
                         let mappedIds = answer[0].map(obj => obj.id);
                         return mappedIds[0]
@@ -158,7 +158,32 @@ const addRole = () => {
 };
 
 const addEmployee = () => {
-    
-}
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'firstName',
+                message: `What is the employee's first name?`
+            },
+            {
+                type: 'input',
+                name: 'lastName',
+                message: `What is the employee's last name?`
+            }
+        ])
+        .then(answers => {
+            db.query(`INSERT INTO employees(first_name, last_name)
+            VALUES(?, ?)`, [answers.firstName, answers.lastName], (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    db.query(`SELECT * FROM employees`, (err, res) => {
+                        err ? console.log(err) : console.table(res);
+                        menu();
+                    })
+                }
+            })
+        })
+};
 
 const updateEmployee

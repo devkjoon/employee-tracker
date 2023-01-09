@@ -1,11 +1,11 @@
-INSERT INTO department (name)
+INSERT INTO departments (name)
 VALUES ("Marketing"),
        ("Finance"),
        ("Operations Management"),
        ("Human Resources"),
        ("IT");
        
-INSERT INTO role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES ("Chief Marketing Officer", 340779, 1),
        ("Marketing Coordinator", 48468, 1),
        ("Portfolio Manager", 106070, 2),
