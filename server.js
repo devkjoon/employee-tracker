@@ -182,7 +182,7 @@ const addEmployee = () => {
         ])
         .then(answers => {
             db.query(`INSERT INTO employees(first_name, last_name, role_id, manager_id)
-            VALUES(?, ?)`, [answers.firstName, answers.lastName, answers.roleID, answers.managerID], (err, res) => {
+            VALUES(?, ?, ?, ?)`, [answers.firstName, answers.lastName, answers.roleID, answers.managerID], (err, res) => {
                 if (err) {
                     console.log(err);
                 } else {
