@@ -100,8 +100,8 @@ const addDepartment = () => {
         .prompt([
             {
                 type: 'input',
-                message: 'What department would you like to add?',
-                name: 'addDepartment'
+                name: 'addDepartment',
+                message: 'What department would you like to add?'
             }
         ])
         .then((answers) => {
@@ -116,10 +116,49 @@ const addDepartment = () => {
                 }
             })
         })
+};
+
+const addRole = () => {
+    const departments = () => db.promise().query(`SELECT * FROM department`)
+        .then((rows) => {
+            let names = rows[0].map(obj => obj.name);
+            return names
+        })
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'roleName',
+                    message: `What is the role you'd like to add?`
+                },
+                {
+                    type: 'input',
+                    name: 'roleSalary',
+                    message: `What is the salary of this role?`
+                },
+                {
+                    type: 'list',
+                    name: 'roleDepartment',
+                    message: `What department is this role?`,
+                    choices: departments
+                }
+            ])
+            .then(answers => {
+                db.promise().query(`SELECT id FROM department WHERE name = ?`, answers.roleDepartment)
+                    .then(answer => {
+                        let mappedIds = answer[0].map(obj => obj.id);
+                        return mappedIds[0]
+                    })
+                    .then((mappedIds) => {
+                        db.promise().query(`INSERT INTO roles (title, salary, department)
+                        VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, answers.roleDepartment])
+                        menu();
+                    })
+            })  
+};
+
+const addEmployee = () => {
+    
 }
-
-const addRole
-
-const addEmployee
 
 const updateEmployee
