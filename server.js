@@ -1,9 +1,19 @@
 const inquirer = require("inquirer");
 const fs = require('fs');
 const path = require('path');
-const { urlToHttpOptions } = require("url");
+const mysql = require('mysql2');
 
-function startApp() {
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        user: 'root', 
+        password: 'password',
+        database: 'employees_db'
+    },
+    console.log("Connection to employees_db successful!")
+);
+
+function menu() {
     inquirer
         .prompt([
             {
@@ -18,6 +28,7 @@ function startApp() {
                     "Add A Role",
                     "Add An Employee",
                     "Update An Employee Role",
+                    "Exit"
                 ],
                 validate: (options) => {
                     if (options) {
@@ -32,28 +43,67 @@ function startApp() {
         .then((answers) => {
             switch (answers.options) {
                 case "View All Departments":
-                    viewAllDepartments();
+                    viewDepartment();
                     break;
                 case "View All Roles":
-                    viewAllRoles();
+                    viewRole();
                     break;
                 case "View All Employees":
-                    viewAllEmployees();
+                    viewEmployee();
                     break;
                 case "Add A Department":
-                    addADepartment();
+                    addDepartment();
                     break;
                 case "Add A Role":
-                    addARole();
+                    addRole();
                     break;
                 case "Add An Employee":
-                    addAnEmployee();
+                    addEmployee();
                     break;
                 case "Update An Employee Role":
-                    updateAnEmployeeRole();
+                    updateEmployee();
                     break;
+                case "Exit":
+                    console.log("Exiting Application")
+                    process.exit();
                 default:
                     console.log('Something went wrong! Please try again!');
             }
         })
+};
+
+menu();
+
+const viewDepartment = () => {
+    db.query('SELECT * FROM department', (err, res) => {
+        err ? console.error(err) : console.table(res);
+        menu();
+    })
+};
+
+const viewRole = () => {
+    db.query('SELECT * FROM role', (err, res) => {
+        err ? console.error(err) : console.table(res);
+        menu();
+    })
 }
+
+const viewEmployee = () => {
+    db.query('SELECT * FROM employee', (err, res) => {
+        err ? console.error(err) : console.table(res);
+        menu();
+    })
+};
+
+const addDepartment = () => {
+    inquirer
+        .prompt([
+            
+        ])
+}
+
+const addRole
+
+const addEmployee
+
+const updateEmployee
