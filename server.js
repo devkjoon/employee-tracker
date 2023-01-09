@@ -168,11 +168,21 @@ const addEmployee = () => {
                 type: 'input',
                 name: 'lastName',
                 message: `What is the employee's last name?`
+            },
+            {
+                type: 'input',
+                name: 'roleID',
+                message: `What is the ID of this employee's role?`
+            },
+            {
+                type: 'input',
+                name: 'managerID',
+                message: `What is the ID of this employee's manager?`
             }
         ])
         .then(answers => {
-            db.query(`INSERT INTO employees(first_name, last_name)
-            VALUES(?, ?)`, [answers.firstName, answers.lastName], (err, res) => {
+            db.query(`INSERT INTO employees(first_name, last_name, role_id, manager_id)
+            VALUES(?, ?)`, [answers.firstName, answers.lastName, answers.roleID, answers.managerID], (err, res) => {
                 if (err) {
                     console.log(err);
                 } else {
