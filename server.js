@@ -1,7 +1,6 @@
-const inquirer = require("inquirer");
-const fs = require('fs');
-const path = require('path');
 const mysql = require('mysql2');
+const inquirer = require('inquirer');
+const consoleTable = require('console.table');
 
 const db = mysql.createConnection(
     {
@@ -146,12 +145,12 @@ const addRole = () => {
             .then(answers => {
                 db.promise().query(`SELECT id FROM departments WHERE name = ?`, answers.roleDepartment)
                     .then(answer => {
-                        let mappedIds = answer[0].map(obj => obj.id);
-                        return mappedIds[0]
+                        let mappedId = answer[0].map(obj => obj.id);
+                        return mappedId[0]
                     })
-                    .then((mappedIds) => {
-                        db.promise().query(`INSERT INTO roles (title, salary, department)
-                        VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, answers.roleDepartment])
+                    .then((mappedId) => {
+                        db.promise().query(`INSERT INTO roles(title, salary, department_id)
+                        VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, mappedId]);
                         menu();
                     })
             })  
@@ -185,5 +184,3 @@ const addEmployee = () => {
             })
         })
 };
-
-const updateEmployee
