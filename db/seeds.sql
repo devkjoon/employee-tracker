@@ -15,7 +15,7 @@ INSERT INTO roles (title, salary, department_id)
            ("Talent Acquisition Manager", 125227, 4),
            ("Staff Coordinator", 42685, 4),
            ("Service Desk Analyst", 49947, 5),
-           ("Network Manager", 97985, 5),
+           ("Network Manager", 97985, 5);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES ("Mary", "Smith", 1, NULL),
@@ -32,8 +32,7 @@ INSERT INTO employees (first_name, last_name, role_id, manager_id)
            ("Margaret", "Davis", 8, 10),
            ("Samuel", "Wilson", 9, NULL),
            ("Ann", "Anderson", 10, 13),
-           ("David", "Moore", 10, 13)
-
+           ("David", "Moore", 10, 13);
       
        
        
