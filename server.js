@@ -42,25 +42,25 @@ function menu() {
         .then((answers) => {
             switch (answers.options) {
                 case "View All Departments":
-                    viewDepartment();
+                    viewDept();
                     break;
                 case "View All Roles":
                     viewRole();
                     break;
                 case "View All Employees":
-                    viewEmployee();
+                    viewEmp();
                     break;
                 case "Add A Department":
-                    addDepartment();
+                    addDept();
                     break;
                 case "Add A Role":
                     addRole();
                     break;
                 case "Add An Employee":
-                    addEmployee();
+                    addEmp();
                     break;
                 case "Update An Employee Role":
-                    updateEmployee();
+                    update();
                     break;
                 case "Exit":
                     console.log("Exiting Application")
@@ -73,7 +73,7 @@ function menu() {
 
 menu();
 
-const viewDepartment = () => {
+const viewDept = () => {
     db.query(`SELECT * FROM departments`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
@@ -87,14 +87,14 @@ const viewRole = () => {
     })
 }
 
-const viewEmployee = () => {
+const viewEmp = () => {
     db.query(`SELECT * FROM employees`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
     })
 };
 
-const addDepartment = () => {
+const addDept = () => {
     inquirer
         .prompt([
             {
@@ -118,10 +118,10 @@ const addDepartment = () => {
 };
 
 const addRole = () => {
-    const departments = () => db.promise().query(`SELECT * FROM department`)
+    const departments = () => db.promise().query(`SELECT * FROM departments`)
         .then((rows) => {
-            let names = rows[0].map(obj => obj.name);
-            return names
+            let name = rows[0].map(obj => obj.name);
+            return name
         })
         inquirer
             .prompt([
@@ -156,7 +156,7 @@ const addRole = () => {
             })  
 };
 
-const addEmployee = () => {
+const addEmp = () => {
     inquirer
         .prompt([
             {
@@ -193,4 +193,32 @@ const addEmployee = () => {
                 }
             })
         })
+};
+
+const update = () => {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'empID',
+            message: `What is the employee's ID?`
+        },
+        {
+            type: 'input',
+            name: 'empRole',
+            message: `What is the ID of the role you would like to update this employee to?`
+        }
+    ])
+    .then(answers => {
+        db.query(`UPDATE employees SET role_id WHERE id=?`, [answers.empRole, answers.empID], (err, res) => {
+            if (err) {
+                console.log(err);
+            } else {
+                db.query(`SELECT * FROM employees`, (err, res) => {
+                    err ? console.log(err) : console.table(res);
+                    menu();
+                })
+            }
+        })
+    })
 };
