@@ -76,22 +76,37 @@ menu();
 const viewDept = () => {
     db.query(`SELECT * FROM departments`, (err, res) => {
         err ? console.error(err) : console.table(res);
-        menu();
     })
+    menu();
 };
 
 const viewRole = () => {
     db.query(`SELECT * FROM roles`, (err, res) => {
         err ? console.error(err) : console.table(res);
-        menu();
     })
+    menu();
 }
 
 const viewEmp = () => {
-    db.query(`SELECT * FROM employees`, (err, res) => {
+    db.query(`SELECT e.id AS 'Employee ID',
+    e.first_name AS 'First Name',
+    e.last_name AS 'Last Name',
+    departments.name AS 'Department',
+    roles.title AS 'Title',
+CONCAT(m.first_name, ' ', m.last_name) 
+    AS Manager FROM 
+    employees_db.employees AS e 
+INNER JOIN
+    roles ON (e.role_id = roles.id)
+INNER JOIN
+    departments ON (roles.department_id = departments.id)
+LEFT JOIN
+    employees_db.employees m ON e.manager_id = m.id
+ORDER BY
+    departments.id;`, (err, res) => {
         err ? console.error(err) : console.table(res);
         menu();
-    })
+    });
 };
 
 const addDept = () => {
@@ -110,11 +125,11 @@ const addDept = () => {
                 } else {
                     db.query(`SELECT * FROM departments`, (err, res) => {
                         err ? console.error(err) : console.table(res);
-                        menu();
                     })
                 }
             })
         })
+        menu();
 };
 
 const addRole = () => {
@@ -151,9 +166,9 @@ const addRole = () => {
                     .then((mappedID) => {
                         db.promise().query(`INSERT INTO roles(title, salary, department_id)
                         VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, mappedID]);
-                        menu();
                     })
             })  
+            menu();
 };
 
 const addEmp = () => {
@@ -188,11 +203,11 @@ const addEmp = () => {
                 } else {
                     db.query(`SELECT * FROM employees`, (err, res) => {
                         err ? console.log(err) : console.table(res);
-                        menu();
                     })
                 }
             })
         })
+        menu();
 };
 
 const update = () => {
