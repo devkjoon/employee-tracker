@@ -1,8 +1,9 @@
 # Employee Tracker
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 
 ## Description
 
-This application allows users to view and manage a company's employee database.
+This application allows users to view and manage a company's employee database, which includes the following: Departments, employees, managers, and roles.
 
 ## Table of Contents
 
@@ -25,7 +26,11 @@ This application allows users to view and manage a company's employee database.
 To use the note taker application,
 - Navigate to [Employee Tracker](https://github.com/devkjoon/employee-tracker)
 - Clone the repository to your local machine to ensure you have the most up to date application
-- Open integrated terminal then connect to `mySQL` then in another integrated terminal type "node server.js"
+- Install `inquirer` by `npm i inquirer@8.2.4`
+- Install `mySQL` via `npm i mysql2`
+- Install `console table` via `npm i console.table`
+- Open integrated terminal, then connect to `mySQL` and source the sql databases
+- Open integrated terminal, then type `npm server.js` to start the application
 
 ## Usage
 
@@ -53,4 +58,4 @@ To use the note taker application,
 
 ## License
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
+See LICENSE in repository
