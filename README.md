@@ -56,7 +56,7 @@ To use the note taker application,
 
 ## Preview 
 
-[Uploading Employee Tracker Demonstration.webm…]()
+[Employee Tracker Demonstration.webm](https://user-images.githubusercontent.com/114375310/211667225-c04a815a-94d4-46b4-92b7-eae849a6a0e4.webm)
 
 ## License
 
