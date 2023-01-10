@@ -63,7 +63,7 @@ function menu() {
                     update();
                     break;
                 case "Exit":
-                    console.log("Exiting Application")
+                    console.log("Exited Application")
                     process.exit();
                 default:
                     console.log('Something went wrong! Please try again!');
@@ -210,7 +210,7 @@ const update = () => {
         }
     ])
     .then(answers => {
-        db.query(`UPDATE employees SET role_id WHERE id=?`, [answers.empRole, answers.empID], (err, res) => {
+        db.query(`UPDATE employees SET role_id=? WHERE id=?`, [answers.empRole, answers.empID], (err, res) => {
             if (err) {
                 console.log(err);
             } else {
