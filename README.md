@@ -23,6 +23,7 @@ This application allows users to view and manage a company's employee database.
 To use the note taker application,
 - Navigate to [Employee Tracker](https://github.com/devkjoon/employee-tracker)
 - Clone the repository to your local machine to ensure you have the most up to date application
+- Open integrated terminal then connect to `mySQL` then in another integrated terminal type "node server.js"
 
 ## Usage
 
