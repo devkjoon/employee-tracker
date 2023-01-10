@@ -3,7 +3,7 @@
 
 ## Description
 
-This application allows users to view and manage a company's employee database, which includes the following: Departments, employees, managers, and roles.
+This application allows users to view and manage a company's employee database. Users can view departments within the company, what types of roles there are, the salaries for that role, employee ID number and who their supervisors are. New departments and roles can be added to the database. Users can also update the employee department and role as well.
 
 ## Table of Contents
 
