@@ -194,3 +194,10 @@ const addEmployee = () => {
             })
         })
 };
+
+const updateEmployee = () => {
+    inquirer
+        .prompt([
+            {}
+        ])
+}
