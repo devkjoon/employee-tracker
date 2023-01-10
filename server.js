@@ -145,8 +145,8 @@ const addRole = () => {
             .then(answers => {
                 db.promise().query(`SELECT id FROM departments WHERE name = ?`, answers.roleDepartment)
                     .then(answer => {
-                        let mappedId = answer[0].map(obj => obj.id);
-                        return mappedId[0]
+                        let mappedID = answer[0].map(obj => obj.id);
+                        return mappedID[0]
                     })
                     .then((mappedID) => {
                         db.promise().query(`INSERT INTO roles(title, salary, department_id)
@@ -218,11 +218,11 @@ const update = () => {
             .then(answers => {
                 db.promise().query(`SELECT id FROM roles WHERE title = ?`, answers.employeeRole)
                     .then(answer => {
-                        let mappedId = answer[0].map(obj => obj.id);
-                        return mappedId[0]
+                        let mappedID = answer[0].map(obj => obj.id);
+                        return mappedID[0]
                     })
                     .then((mappedID) => {
-                        db.promise().query(`UPDATE employees SET role_ID=? WHERE id=?`, [mappedID, answers.empID], (err, res) => {
+                        db.query(`UPDATE employees SET role_ID=? WHERE id=?`, [mappedID, answers.employeeID], (err, res) => {
                             if (err) {
                                 console.log(err);
                             } else {
@@ -235,31 +235,3 @@ const update = () => {
                     })
             })
 };
-
-// const update = () => {
-//     inquirer
-//     .prompt([
-//         {
-//             type: 'input',
-//             name: 'empID',
-//             message: `What is the employee's ID?`
-//         },
-//         {
-//             type: 'input',
-//             name: 'empRole',
-//             message: `What is the ID of the role you would like to update this employee to?`
-//         }
-//     ])
-//     .then(answers => {
-//         db.query(`UPDATE employees SET role_id=? WHERE id=?`, [answers.empRole, answers.empID], (err, res) => {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 db.query(`SELECT * FROM employees`, (err, res) => {
-//                     err ? console.log(err) : console.table(res);
-//                     menu();
-//                 })
-//             }
-//         })
-//     })
-// };
