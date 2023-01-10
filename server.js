@@ -76,15 +76,15 @@ menu();
 const viewDept = () => {
     db.query(`SELECT * FROM departments`, (err, res) => {
         err ? console.error(err) : console.table(res);
+        menu();
     })
-    menu();
 };
 
 const viewRole = () => {
     db.query(`SELECT * FROM roles`, (err, res) => {
         err ? console.error(err) : console.table(res);
+        menu();
     })
-    menu();
 }
 
 const viewEmp = () => {
@@ -125,11 +125,11 @@ const addDept = () => {
                 } else {
                     db.query(`SELECT * FROM departments`, (err, res) => {
                         err ? console.error(err) : console.table(res);
+                        menu();
                     })
                 }
             })
         })
-        menu();
 };
 
 const addRole = () => {
@@ -166,9 +166,9 @@ const addRole = () => {
                     .then((mappedID) => {
                         db.promise().query(`INSERT INTO roles(title, salary, department_id)
                         VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, mappedID]);
+                        menu();
                     })
             })  
-            menu();
 };
 
 const addEmp = () => {
@@ -203,11 +203,11 @@ const addEmp = () => {
                 } else {
                     db.query(`SELECT * FROM employees`, (err, res) => {
                         err ? console.log(err) : console.table(res);
+                        menu();
                     })
                 }
             })
         })
-        menu();
 };
 
 const update = () => {
