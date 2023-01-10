@@ -148,9 +148,9 @@ const addRole = () => {
                         let mappedId = answer[0].map(obj => obj.id);
                         return mappedId[0]
                     })
-                    .then((mappedId) => {
+                    .then((mappedID) => {
                         db.promise().query(`INSERT INTO roles(title, salary, department_id)
-                        VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, mappedId]);
+                        VALUES(?, ?, ?)`, [answers.roleName, answers.roleSalary, mappedID]);
                         menu();
                     })
             })  
@@ -196,29 +196,70 @@ const addEmp = () => {
 };
 
 const update = () => {
-    inquirer
-    .prompt([
-        {
-            type: 'input',
-            name: 'empID',
-            message: `What is the employee's ID?`
-        },
-        {
-            type: 'input',
-            name: 'empRole',
-            message: `What is the ID of the role you would like to update this employee to?`
-        }
-    ])
-    .then(answers => {
-        db.query(`UPDATE employees SET role_id=? WHERE id=?`, [answers.empRole, answers.empID], (err, res) => {
-            if (err) {
-                console.log(err);
-            } else {
-                db.query(`SELECT * FROM employees`, (err, res) => {
-                    err ? console.log(err) : console.table(res);
-                    menu();
-                })
-            }
+    const roles = () => db.promise().query(`SELECT * FROM roles`)
+        .then((rows) => {
+            let titles = rows[0].map(obj => obj.title);
+            return titles
         })
-    })
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'employeeID',
+                    message: `What is the employee's ID?`
+                },
+                {
+                    type: 'list',
+                    name: 'employeeRole',
+                    message: `What would you like to set the employee role as?`,
+                    choices: roles
+                }
+            ])
+            .then(answers => {
+                db.promise().query(`SELECT id FROM roles WHERE title = ?`, answers.employeeRole)
+                    .then(answer => {
+                        let mappedId = answer[0].map(obj => obj.id);
+                        return mappedId[0]
+                    })
+                    .then((mappedID) => {
+                        db.promise().query(`UPDATE employees SET role_ID=? WHERE id=?`, [mappedID, answers.empID], (err, res) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                db.query(`SELECT * FROM employees`, (err, res) => {
+                                    err ? console.log(err) : console.table(res);
+                                    menu();
+                                })
+                            }
+                        })
+                    })
+            })
 };
+
+// const update = () => {
+//     inquirer
+//     .prompt([
+//         {
+//             type: 'input',
+//             name: 'empID',
+//             message: `What is the employee's ID?`
+//         },
+//         {
+//             type: 'input',
+//             name: 'empRole',
+//             message: `What is the ID of the role you would like to update this employee to?`
+//         }
+//     ])
+//     .then(answers => {
+//         db.query(`UPDATE employees SET role_id=? WHERE id=?`, [answers.empRole, answers.empID], (err, res) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 db.query(`SELECT * FROM employees`, (err, res) => {
+//                     err ? console.log(err) : console.table(res);
+//                     menu();
+//                 })
+//             }
+//         })
+//     })
+// };
